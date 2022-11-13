@@ -1,4 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { AiTwotoneLock } from "react-icons/ai";
+import { BsFillPersonFill } from "react-icons/bs";
 
 type Inputs = {
   email: string;
@@ -18,10 +20,16 @@ export default function Form() {
   console.log(errors);
 
   return (
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
-        <label>Email</label>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col w-1/2 justify-center items-center pt-3"
+    >
+      <label className="w-1/2">Email</label>
+      <div className="flex items-center justify-start border border-black rounded w-1/2 pl-2 mb-3">
+        <BsFillPersonFill className="mr-2" />
         <input
           placeholder="user@rapptrlabs.com"
+          className="w-full focus:border-none"
           {...register("email", {
             required: "Not a valid email",
             pattern: {
@@ -34,11 +42,15 @@ export default function Form() {
             },
           })}
         />
-        {errors.email && <span>{errors.email.message}</span>}
+      </div>
+      {errors.email && <span className="text-red-600">{errors.email.message}</span>}
 
-        <label>Password</label>
+      <label className="w-1/2">Password</label>
+      <div className="flex items-center justify-start border border-black rounded w-1/2 pl-2 mb-6">
+        <AiTwotoneLock className="mr-2" />
         <input
           type="password"
+          className="w-full"
           placeholder="Must be at least 4 characters"
           {...register("password", {
             required: "Not a valid password",
@@ -52,9 +64,14 @@ export default function Form() {
             },
           })}
         />
-        {errors.password && <span>Not a valid password</span>}
+      </div>
+      {errors.password && <span className="text-red-600">Not a valid password</span>}
 
-        <input type="submit" value="Login" className={!errors ? "btn" : "btn-error"} />
-      </form>
+      <input
+        type="submit"
+        value="Login"
+        className="w-20 border border-black py-2 px-4 rounded-xl cursor-pointer"
+      />
+    </form>
   );
 }

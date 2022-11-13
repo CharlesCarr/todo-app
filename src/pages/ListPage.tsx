@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListItem from "../components/ListItem";
+import { AiOutlineSearch } from "react-icons/ai";
 export interface listData {
   id: number;
   text: string;
@@ -32,9 +33,11 @@ const ListPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (searchInput != '') {
+    if (searchInput != "") {
       const lowerSearch = searchInput.toLowerCase();
-      const filteredListItems = listItems.filter((item: listData) => (item.text.toLowerCase().includes(lowerSearch)));
+      const filteredListItems = listItems.filter((item: listData) =>
+        item.text.toLowerCase().includes(lowerSearch)
+      );
       setFilteredItems(filteredListItems);
     } else {
       setFilteredItems(null);
@@ -66,12 +69,16 @@ const ListPage = () => {
       </button>
 
       <div className="border border-black rounded-2xl w-1/2 flex flex-col justify-center items-center">
-        <div className="w-full flex justify-between items-center p-6">
-          <input
-            placeholder="search"
-            className="border border-black rounded-xl pl-2"
-            onChange={(e) => setSearchInput(e.target.value)}
-          ></input>
+        <div className="w-full flex justify-between items-center p-6 border-b border-black">
+          <div className="flex justify-start items-center border border-black rounded-xl py-2">
+            <AiOutlineSearch className="pl-2 w-6 h-6" />
+            <input
+              placeholder="search"
+              className="pl-2 w-full border-none outline-none"
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+          </div>
+
           <button
             className="border border-black rounded p-y-2 px-4"
             onClick={addItem}

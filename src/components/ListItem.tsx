@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { listData } from "../pages/ListPage";
+import { FaPencilAlt } from "react-icons/fa";
+import { IoMdTrash } from "react-icons/io";
 
 interface ListItemProps {
   id: number;
@@ -13,30 +15,33 @@ const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
   console.log(id);
 
   const removeItem = (itemState: listData) => {
-    const filteredItems = listItems.filter((item: listData) => item.text !== itemState.text);
+    const filteredItems = listItems.filter(
+      (item: listData) => item.text !== itemState.text
+    );
     setListItems(filteredItems);
   };
 
   const saveEditHandler = () => {
     // local list item update
-    setItemState((prev) => ({...prev, edit: false}))
+    setItemState((prev) => ({ ...prev, edit: false }));
     // full list update
     const updatedList = listItems.map((item: listData) => {
-        if (item.id === itemState.id) {
-            item.text = itemState.text;
-        }
-        return item;
+      if (item.id === itemState.id) {
+        item.text = itemState.text;
+      }
+      return item;
     });
     setListItems(updatedList);
-  }
-
+  };
 
   return (
-    <li className="w-full border border-black flex justify-between items-center">
+    <li className="w-full border-b border-black flex justify-between items-center">
       {itemState.edit ? (
         <input
           value={itemState.text}
-          onChange={(e) => setItemState((prev) => ({...prev, text: e.target.value }))}
+          onChange={(e) =>
+            setItemState((prev) => ({ ...prev, text: e.target.value }))
+          }
           className="border border-black pl-2 ml-4"
         />
       ) : (
@@ -53,18 +58,15 @@ const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
           </button>
         ) : (
           <>
-            <p
-              className="border border-black p-2"
-              onClick={() => setItemState((prev) => ({...prev, edit: true }))}
-            >
-              E
-            </p>
-            <p
-              className="border border-black p-2"
+            <FaPencilAlt
+              className="w-4 h-4 cursor-pointer"
+              onClick={() => setItemState((prev) => ({ ...prev, edit: true }))}
+            />
+
+            <IoMdTrash
+              className="w-4 h-4 cursor-pointer"
               onClick={() => removeItem(itemState)}
-            >
-              D
-            </p>
+            />
           </>
         )}
       </div>
