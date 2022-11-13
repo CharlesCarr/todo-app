@@ -1,9 +1,11 @@
+import Form from "../components/Form";
 
-
-const LoginPage = () => {
+export default function LoginPage() {
   return (
-    <div>LoginPage</div>
-  )
-}
+    <div className="test">
+      <h1>Rapptr Labs</h1>
 
-export default LoginPage
+      <Form />
+    </div>
+  );
+}
