@@ -19,6 +19,7 @@ const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
       (item: listData) => item.text !== itemState.text
     );
     setListItems(filteredItems);
+    localStorage.setItem("list", JSON.stringify(filteredItems));
   };
 
   const saveEditHandler = () => {
@@ -28,10 +29,12 @@ const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
     const updatedList = listItems.map((item: listData) => {
       if (item.id === itemState.id) {
         item.text = itemState.text;
+        item.edit = false;
       }
       return item;
     });
     setListItems(updatedList);
+    localStorage.setItem("list", JSON.stringify(updatedList));
   };
 
   return (

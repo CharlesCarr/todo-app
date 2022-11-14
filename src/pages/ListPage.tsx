@@ -27,7 +27,12 @@ const sampleListData2: listData[] = [
 ];
 
 const ListPage = () => {
-  const [listItems, setListItems] = useState<listData[]>(sampleListData2);
+  const [listItems, setListItems] = useState<listData[]>(() => {
+    // getting stored value from local storage
+    const saved = localStorage.getItem("list");
+    const initialValue = saved ? JSON.parse(saved) : null;
+    return initialValue || sampleListData2;
+  });
   const [searchInput, setSearchInput] = useState<string>("");
   const [filteredItems, setFilteredItems] = useState<listData[] | null>(null);
   const navigate = useNavigate();
