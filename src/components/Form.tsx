@@ -1,29 +1,41 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AiTwotoneLock } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../App";
 
-type Inputs = {
+interface Inputs {
   email: string;
   password: string;
-};
-
-// type FormData = {
-// };
+}
 
 export default function Form() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<Inputs>({ mode: "onBlur" });
+
+  const [buttonActive, setButtonActive] = useState(false);
+  const watchEmail = watch("email", "");
+  const watchPassword = watch("password", "");
+
+  useEffect(() => {
+    if (
+      Object.keys(errors).length === 0 &&
+      watchEmail !== "" &&
+      watchPassword !== ""
+    ) {
+      setButtonActive(true);
+    }
+  }, [errors, watchEmail, watchPassword]);
 
   const { loginStatus, setLoginStatus } = useContext(LoginContext);
   const navigate = useNavigate();
 
-  const postData = async ({ email, password }: any) => {
+  const postData = async ({ email, password }: Inputs) => {
     const URL = "http://dev.rapptrlabs.com/Tests/scripts/user-login.php";
     const formdata = new FormData();
     formdata.append("email", email);
@@ -128,11 +140,20 @@ export default function Form() {
         </span>
       )}
 
-      <input
-        type="submit"
-        value="Login"
-        className="w-3/4 md:w-1/2 border-2 border-white py-2 px-4 rounded-xl cursor-pointer text-white bg-[#0b131b] tracking-wide text-lg"
-      />
+      {buttonActive ? (
+        <input
+          type="submit"
+          value="Login"
+          className="w-3/4 md:w-1/2 border-2 border-white py-2 px-4 rounded-xl cursor-pointer tracking-wide text-lg hover:bg-white hover:text-[#0b131b] hover:shadow-2xl hover:duration-150"
+        />
+      ) : (
+        <input
+          type="submit"
+          value="Login"
+          className="w-3/4 md:w-1/2 border-2 border-white py-2 px-4 rounded-xl tracking-wide text-lg opacity-50 cursor-not-allowed"
+        />
+      )}
+
       {loginStatus === "error" && (
         <span className="text-red-600 text-center text-sm">
           The server could not be reached. Please try again later.
