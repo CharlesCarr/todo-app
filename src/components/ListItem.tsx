@@ -4,7 +4,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { IoMdTrash } from "react-icons/io";
 
 interface ListItemProps {
-  id: number;
+  id: string;
   item: listData;
   listItems: listData[];
   setListItems: React.Dispatch<React.SetStateAction<listData[]>>;
@@ -37,7 +37,7 @@ const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
   };
 
   return (
-    <li className="w-full border-b border-white flex justify-between items-center px-4 min-h-[50px]">
+    <li className="w-full border-b border-white flex justify-between items-center px-4 min-h-[55px]">
       {itemState.edit ? (
         <input
           value={itemState.text}
@@ -55,7 +55,7 @@ const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
         {itemState.edit ? (
           <button
             onClick={saveEditHandler}
-            className="border border-white py-1 px-2"
+            className="border border-white py-1 px-4 rounded-lg hover:bg-white hover:text-[#0b131b] hover:shadow-2xl hover:duration-150"
           >
             Save
           </button>

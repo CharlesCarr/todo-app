@@ -3,26 +3,27 @@ import { useNavigate } from "react-router-dom";
 import ListItem from "../components/ListItem";
 import { AiOutlineSearch } from "react-icons/ai";
 import { LoginContext } from "../App";
+import { v4 as uuidv4 } from "uuid";
 export interface listData {
-  id: number;
+  id: string;
   text: string;
   edit: boolean;
 }
 
 const defaultData: listData[] = [
   {
-    id: 0,
+    id: uuidv4(),
     text: "Workout",
     edit: false,
   },
   {
-    id: 1,
-    text: "Laundry",
+    id: uuidv4(),
+    text: "Pay bills",
     edit: false,
   },
   {
-    id: 2,
-    text: "Walk Dog",
+    id: uuidv4(),
+    text: "Get lunch",
     edit: false,
   },
 ];
@@ -52,14 +53,11 @@ const ListPage = () => {
   }, [searchInput]);
 
   const addItem = () => {
-    setListItems((prev) => [
-      ...prev,
-      { id: listItems.length + 1, text: "", edit: true },
-    ]);
+    setListItems((prev) => [...prev, { id: uuidv4(), text: "", edit: true }]);
   };
 
   const logoutHandler = () => {
-     // TO DO: prob also want to logout user (some global state that is then switched off)
+    // TO DO: prob also want to logout user (some global state that is then switched off)
     setLoginStatus("logged out");
     // navigate to login page
     navigate("/login");
@@ -67,9 +65,9 @@ const ListPage = () => {
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center relative py-20">
-      <h1 className="text-5xl mt-10 mb-5">My To-Do List</h1>
+      <h1 className="text-5xl mt-10 mb-8">My To-Do List</h1>
       <button
-        className="absolute right-6 top-6 border border-white rounded py-2 px-4"
+        className="absolute right-6 top-6 border border-white rounded py-2 px-4 hover:bg-white hover:text-[#0b131b] hover:shadow-2xl hover:duration-150"
         onClick={logoutHandler}
       >
         Logout
@@ -77,7 +75,7 @@ const ListPage = () => {
 
       <div className="border border-white rounded-2xl w-5/6 md:w-3/4 xl:w-1/2 flex flex-col justify-center items-center">
         <div className="w-full flex justify-between items-center p-6 border-b border-white">
-          <div className="flex justify-start items-center border border-white rounded-lg py-1">
+          <div className="flex justify-start items-center border border-white rounded-full px-2">
             <AiOutlineSearch className="pl-4 w-10 h-10 mr-2" />
             <input
               placeholder="search"
@@ -87,7 +85,7 @@ const ListPage = () => {
           </div>
 
           <button
-            className="border border-white rounded-lg py-2 px-4 sm:px-6"
+            className="border border-white rounded-lg py-2 px-4 sm:px-6 bg-[#398ebb] hover:bg-white hover:text-[#0b131b] hover:shadow-2xl hover:duration-150"
             onClick={addItem}
           >
             New
