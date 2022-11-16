@@ -12,7 +12,6 @@ interface ListItemProps {
 
 const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
   const [itemState, setItemState] = useState(item);
-  console.log(id);
 
   const removeItem = (itemState: listData) => {
     const filteredItems = listItems.filter(
@@ -38,14 +37,15 @@ const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
   };
 
   return (
-    <li className="w-full border-b border-black flex justify-between items-center">
+    <li className="w-full border-b border-white flex justify-between items-center px-4 min-h-[50px]">
       {itemState.edit ? (
         <input
           value={itemState.text}
+          // need to have check for character count
           onChange={(e) =>
             setItemState((prev) => ({ ...prev, text: e.target.value }))
           }
-          className="border border-black pl-2 ml-4"
+          className="border border-white pl-2 ml-4 bg-[#0b131b] outline-none"
         />
       ) : (
         <p className="pl-4">{itemState.text}</p>
@@ -55,19 +55,19 @@ const ListItem = ({ id, item, listItems, setListItems }: ListItemProps) => {
         {itemState.edit ? (
           <button
             onClick={saveEditHandler}
-            className="border border-black py-1 px-2"
+            className="border border-white py-1 px-2"
           >
             Save
           </button>
         ) : (
           <>
             <FaPencilAlt
-              className="w-4 h-4 cursor-pointer"
+              className="w-5 h-5 cursor-pointer"
               onClick={() => setItemState((prev) => ({ ...prev, edit: true }))}
             />
 
             <IoMdTrash
-              className="w-4 h-4 cursor-pointer"
+              className="w-5 h-5 cursor-pointer"
               onClick={() => removeItem(itemState)}
             />
           </>
